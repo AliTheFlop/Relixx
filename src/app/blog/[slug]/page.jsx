@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import { useParams } from "next/navigation";
 
-export default function Markdown() {
+export default function Blog() {
     const [content, setContent] = useState();
+    const { slug } = useParams();
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const { data: response } = await axios.get(
-                    "http://localhost:4000/markdown"
+                    `http://localhost:4000/blog/${slug}`
                 );
                 setContent(response);
             } catch (err) {
