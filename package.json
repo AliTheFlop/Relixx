@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.15",
+    "@tiptap/react": "^2.10.4",
+    "@tiptap/starter-kit": "^2.10.4",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "dompurify": "^3.2.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "he": "^1.2.0",
+    "jsdom": "^25.0.1",
     "next": "15.1.2",
     "pg": "^8.13.1",
     "react": "^19.0.0",
