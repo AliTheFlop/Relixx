@@ -21,7 +21,7 @@ export async function generateStaticParams() {
     }
 }
 
-// Server component to fetch data - Based on slug.
+// Server component - Fetch data based on slug.
 async function fetchBlogPost(slug) {
     try {
         const result = await client.query({

@@ -2,8 +2,9 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Placeholder from "@tiptap/extension-placeholder";
 import saveContent from "@/lib/SaveContent";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 function MenuBar({ editor }) {
     if (!editor) {
@@ -211,13 +212,19 @@ export default function Tiptap() {
     }); */
 
     const editor = useEditor({
-        extensions: [StarterKit],
-        content: "<p>John Centa</p>",
+        extensions: [
+            StarterKit,
+            Placeholder.configure({
+                placeholder: "Type something crazy...",
+            }),
+        ],
+
         editorProps: {
             attributes: {
                 class: "focus:outline-none border-b-2",
             },
         },
+        immediatelyRender: false,
     });
 
     return (
@@ -229,7 +236,7 @@ export default function Tiptap() {
                     className="text-2xl focus:outline-none mb-5 rounded-xl font-bold w-full"
                 />
                 <MenuBar editor={editor} />
-                <div className="">
+                <div className="[&_.data-placeholder]:placeholder:text-black">
                     <EditorContent editor={editor} />
                 </div>
             </div>
