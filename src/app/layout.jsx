@@ -1,11 +1,11 @@
 import "./globals.css";
-import NavBar from "@/components/NavBar";
+import Navbar from "@/components/Navbar";
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                <NavBar />
+                <Navbar />
                 {children}
             </body>
         </html>

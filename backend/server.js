@@ -10,6 +10,7 @@ const DOMPurify = createDOMPurify(window);
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = 4000;
@@ -24,6 +25,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.post("/createblog", async (req, res) => {
     if (!req.body.title || !req.body.content) {
@@ -152,6 +155,45 @@ app.get("/getblogs", async (req, res) => {
         res.json(result.rows);
     } catch (err) {
         res.status(500).send(err.message);
+    }
+});
+
+app.get("/userinfo", async (req, res) => {
+    try {
+        const result = await client.query({
+            text: "SELECT * FROM users WHERE email = $1",
+            values: [email],
+        });
+
+        console.log(result);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+app.post("/logout", (req, res) => {
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+        });
+
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        res.status(500).json({
+            error: true,
+            message: "Logout Failed. Something went wrong",
+        });
+    }
+});
+
+app.get("/auth/status", (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        res.json({ isLoggedIn: true });
+    } else {
+        res.json({ isLoggedIn: false });
     }
 });
 

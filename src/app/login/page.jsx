@@ -2,9 +2,12 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ThemeContext } from "@/components/ThemeContext";
+import { useContext } from "react";
 
 export default function Login() {
     const router = useRouter();
+    const { toggleLoggedIn } = useContext(ThemeContext);
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(e);
@@ -21,7 +24,8 @@ export default function Login() {
             )
             .then((result) => {
                 if (result.data.token) {
-                    router.push("/dashboard");
+                    toggleLoggedIn();
+                    router.push("/dashboard?loggedIn=true");
                 }
             })
             .catch((err) => {

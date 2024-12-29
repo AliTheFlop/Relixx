@@ -6,7 +6,7 @@ export default function RecentBlogs({ blogs }) {
     const router = useRouter();
 
     return (
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mt-10">
             {blogs.map((blog) => (
                 <div
                     key={blog.id}
