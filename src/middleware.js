@@ -4,7 +4,10 @@ import * as jose from "jose";
 export async function middleware(request) {
     const token = request.cookies.get("token")?.value;
 
-    if (!token && request.nextUrl.pathname.startsWith("/dashboard")) {
+    if (
+        (!token && request.nextUrl.pathname.startsWith("/dashboard")) ||
+        (!token && request.nextUrl.pathname.startsWith("/createblog"))
+    ) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 

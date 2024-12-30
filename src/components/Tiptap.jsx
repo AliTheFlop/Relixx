@@ -203,7 +203,7 @@ function MenuBar({ editor }) {
     );
 }
 
-export default function Tiptap() {
+export default function Tiptap({ owner }) {
     const myInput = useRef(null);
     //const [Editing, setEditing] = useState(true);
 
@@ -246,7 +246,8 @@ export default function Tiptap() {
                         if (myInput.current) {
                             saveContent(
                                 myInput.current.value,
-                                editor.getHTML()
+                                editor.getHTML(),
+                                owner
                             );
                         }
                     }}

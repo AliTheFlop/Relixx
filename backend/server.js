@@ -34,6 +34,7 @@ app.post("/createblog", async (req, res) => {
     }
     const title = req.body.title;
     const rawContent = req.body.content;
+    const owner = req.body.owner;
 
     const decodedContent = he.decode(rawContent);
     const content = DOMPurify.sanitize(decodedContent);
@@ -41,8 +42,8 @@ app.post("/createblog", async (req, res) => {
     const mySlug = generateUniqueSlug(title);
     try {
         await client.query({
-            text: "INSERT INTO blogs.blog(content, slug, title) VALUES($1, $2, $3) RETURNING *",
-            values: [content, mySlug, title],
+            text: "INSERT INTO blogs.blog(content, slug, title, owner) VALUES($1, $2, $3, $4) RETURNING *",
+            values: [content, mySlug, title, owner],
         });
         res.send("Content Done");
     } catch (err) {
@@ -192,6 +193,15 @@ app.get("/auth/status", (req, res) => {
     const token = req.cookies.token;
     if (token) {
         res.json({ isLoggedIn: true });
+    } else {
+        res.json({ isLoggedIn: false });
+    }
+});
+
+app.get("/auth/info", (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        res.json({ token: token });
     } else {
         res.json({ isLoggedIn: false });
     }
