@@ -4,7 +4,9 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import saveContent from "@/lib/SaveContent";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 function MenuBar({ editor }) {
     if (!editor) {
@@ -203,8 +205,10 @@ function MenuBar({ editor }) {
     );
 }
 
-export default function Tiptap({ owner }) {
+export default function Tiptap() {
     const myInput = useRef(null);
+    const [owner, setOwner] = useState(null);
+    const router = useRouter();
     //const [Editing, setEditing] = useState(true);
 
     /* setEditing((prev) => {
@@ -227,6 +231,23 @@ export default function Tiptap({ owner }) {
         immediatelyRender: false,
     });
 
+    useEffect(() => {
+        async function fetchOwnerInfo() {
+            try {
+                const response = await axios.get(
+                    "http://localhost:4000/auth/info",
+                    { withCredentials: true }
+                );
+                console.log(response.data);
+                setOwner(response.data.owner);
+            } catch (err) {
+                console.error("Failed to fetch login state: ", err.message);
+            }
+        }
+
+        fetchOwnerInfo();
+    });
+
     return (
         <>
             <div>
@@ -247,7 +268,8 @@ export default function Tiptap({ owner }) {
                             saveContent(
                                 myInput.current.value,
                                 editor.getHTML(),
-                                owner
+                                owner,
+                                router
                             );
                         }
                     }}

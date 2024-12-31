@@ -200,8 +200,10 @@ app.get("/auth/status", (req, res) => {
 
 app.get("/auth/info", (req, res) => {
     const token = req.cookies.token;
+    const userData = jwt.verify(token, process.env.JWT_SECRET);
+
     if (token) {
-        res.json({ token: token });
+        res.json({ owner: userData.userId });
     } else {
         res.json({ isLoggedIn: false });
     }

@@ -84,18 +84,20 @@ export default function Navbar() {
                         </div>
                     ) : (
                         <>
-                            <Link
-                                href="/login"
-                                className="text-[#2C2B2B] hover:text-[#8B3232] transition-colors"
-                            >
-                                Log in
-                            </Link>
-                            <Link
-                                href="/register"
-                                className="text-[#2C2B2B] hover:text-[#8B3232] transition-colors"
-                            >
-                                Sign up
-                            </Link>
+                            <div className="flex items-center space-x-8">
+                                <Link
+                                    href="/login"
+                                    className="text-[#2C2B2B] hover:text-[#8B3232] transition-colors"
+                                >
+                                    Log in
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="text-[#2C2B2B] hover:text-[#8B3232] transition-colors"
+                                >
+                                    Sign up
+                                </Link>
+                            </div>
                         </>
                     )}
                 </div>
